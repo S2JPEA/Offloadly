@@ -77,34 +77,6 @@ The build script compiles the sources with `swiftc`, assembles
 `dist/Offloadly.app`, copies the app icon, and ad-hoc-signs it (needed to run
 on Apple Silicon). No Xcode project file is required.
 
-## Uploading to GitHub
-
-This repo is set up to be uploaded as source code. Do not upload generated
-build outputs or local dependency binaries.
-
-Safe to upload:
-
-- `Sources/`
-- `packaging/`
-- `Resources/README.md`
-- `Package.swift`
-- `README.md`
-- `LICENSE`
-- `THIRD_PARTY_NOTICES.md`
-- `build_app.sh`
-- `.gitignore`
-
-Do not upload:
-
-- `dist/`
-- `.build/`
-- `.build-app/`
-- `Resources/ffmpeg`
-- `Resources/yt-dlp`
-
-Those paths are ignored by `.gitignore`. The app will find Homebrew-installed
-copies of `yt-dlp` and `ffmpeg` at runtime.
-
 ## Project layout
 
 ```
@@ -129,27 +101,3 @@ packaging/Info.plist          Bundle metadata
 build_app.sh                  Compile + assemble + sign
 ```
 
-## How requirements are met
-
-- **Playlists vs videos** — any URL carrying a real `list=` (a playlist URL, or
-  a watch URL opened from a playlist) downloads the whole playlist; only
-  auto-generated radio/"Mix" lists (`RD…`, effectively endless) fall back to the
-  single video.
-- **No ads** — `yt-dlp` fetches the raw media file; YouTube ads are injected by
-  the web player at playback and are never downloaded. In-video sponsor segments
-  can optionally be removed via SponsorBlock.
-- **No login** — public videos need no auth; cookies are never passed.
-
-## License
-
-Offloadly's own source code is licensed under the MIT License. Third-party
-tools used by Offloadly have their own licenses; see
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
-
-## Notes / TODO (later)
-
-- **JavaScript runtime**: recent yt-dlp warns that full YouTube extraction now
-  wants a JS runtime (`deno` or `node`); without one "some formats may be
-  missing." `brew install deno` fixes it (yt-dlp auto-detects it on PATH).
-- Done: source-build dependency lookup, per-video playlist rows,
-  channel/large-playlist confirm guard.
