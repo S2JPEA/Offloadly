@@ -1,0 +1,10 @@
+.DS_Store
+.build/
+.build-app/
+dist/
+
+# Optional local binaries. Do not commit these unless you have verified that
+# the exact binaries are legally redistributable.
+Resources/ffmpeg
+Resources/yt-dlp
+
